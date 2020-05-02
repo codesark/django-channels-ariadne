@@ -1,10 +1,10 @@
-# Django-Channels-Ardiane
+# Django-Channels-Ariadne
 
-An experiment with Ardiane GraphQL implementation with Django Channels.
+An experiment with Ariadne GraphQL implementation with Django Channels.
 
 This project uses websockets to facilitate graphql subcriptions achieved with Channels.
 
 Stack:
  - Django (Web Framework)
- - Channels (Async Library)
- - Ardiane (GraphQL Library)
+ - Channels (Asyncio Library)
+ - Ariadne (GraphQL Library)
