@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/intlTelInput/intlTelInput.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form-container">
+    <h2 class="form-title">Sign Up</h2>
+    <ul class="color">
+      <li class="green"></li>
+      <li class="blue"></li>
+      <li class="red"></li>           
+      <li class="purple"></li>
+      <li class="cyan"></li>
+      <li class="yellow"></li>
+    </ul>
+    <div id="mobile-signup-form" class="form">
+      <form action="" method="POST">
+        {{ form }}
+        {% csrf_token %}
+        <div style="display: flex; flex-direction: row-reverse">
+          <input type="submit" class="button btnFade btnLightBlue" value="SignUp">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+
+<script>
+  // hack to get the plugin to work without loading jQuery
+  window.jQuery = window.$ = function() {
+    return {
+      on: function() {}
+    };
+  };
+  window.$.fn = {};
+  </script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/10.0.2/js/intlTelInput.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/10.0.2/js/utils.js"></script> -->
+
+<script src="{% static 'js/intlTelInput/intlTelInput.min.js' %}"></script>
+<script src="{% static 'js/intlTelInput/utils.js' %}"></script> 
+<script src="{% static 'js/auth.js' %}"></script>
+
+<script>
+//  JS for mobile signup form
+
+var form = document.querySelector("form");
+var telephone_field = document.querySelector('input[type="tel"]');
+
+var iti = intlTelInput(telephone_field, {
+  initialCountry: "in",  
+  // -- Auto lookup country
+  // initialCountry: "auto",
+  // geoIpLookup: function(success, failure) {
+  //   $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+  //     var countryCode = (resp && resp.country) ? resp.country : "";
+  //     success(countryCode);
+  //   });
+  // },
+  dropdownContainer: document.body
+});
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  var num = iti.getNumber(),
+  valid = iti.isValidNumber();
+  if(valid) {
+   telephone_field.value = num;
+   form.submit();
+  } else {
+    alert("Provided Phone Number is not Correct!")
+  }
+}, false);
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/intlTelInput/intlTelInput.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form-container">
+    <h2 class="form-title">Sign In</h2>
+    <ul class="color">
+      <li class="green"></li>
+      <li class="blue"></li>
+      <li class="red"></li>
+      <li class="purple"></li>
+      <li class="cyan"></li>
+      <li class="yellow"></li>
+    </ul>
+    <div id="login-form" class="form">
+      <form action="" method="POST">
+        {% if error_message %}
+        <ul class="errorlist">
+          <li>{{ error_message }}</li>
+        </ul>
+        {% endif %}
+        <p><label for="id_username">Email, Mobile or Username:</label> <input type="text" name="username" autofocus="" required=""
+            id="id_username"></p>
+        <p><label for="id_password">Password:</label> <input type="password" name="password" required=""
+            id="id_password"></p>
+        <div style="display: flex; flex-direction: row-reverse">
+          {% csrf_token %}
+          <input type="submit" class="button btnFade btnLightBlue" value="SignIn">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+  // hack to get the plugin to work without loading jQuery
+  window.jQuery = window.$ = function () {
+    return {
+      on: function () { }
+    };
+  };
+  window.$.fn = {};
+</script>
+
+<script src="{% static 'js/intlTelInput/intlTelInput.min.js' %}"></script>
+<script src="{% static 'js/intlTelInput/utils.js' %}"></script>
+<script src="{% static 'js/auth.js' %}"></script>
+
+<script>
+  //  JS for mobile signup form
+
+  var form = document.querySelector("form");
+  var input = document.querySelector('input');
+
+
+  var num_listener = input.addEventListener('keyup', function (e) {
+    let num = e.target.value;
+    iti_1 = intlTelInputGlobals.getInstance(input);
+    if (!isNaN(num) && num.length >= 5 && !iti_1) {
+      console.log("created");
+      intlTelInput(input, {
+        initialCountry: "in",
+        // -- Auto lookup country
+        // initialCountry: "auto",
+        // geoIpLookup: function(success, failure) {
+        //   $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+        //     var countryCode = (resp && resp.country) ? resp.country : "";
+        //     success(countryCode);
+        //   });
+        // },
+        dropdownContainer: document.body
+      });
+      document.querySelector('#id_username').focus();
+    } else if (num.length < 5) {
+      iti = intlTelInputGlobals.getInstance(input);
+      if (iti) {
+        iti.destroy();
+        document.querySelector('#id_username').focus();
+        document.querySelector('#id_username').setAttribute("placeholder", "");
+      }
+      console.log("destroyed");
+    }
+  });
+
+  form.addEventListener("submit", function (event) {
+    iti_2 = intlTelInputGlobals.getInstance(input);
+    if (iti_2) {
+      event.preventDefault();
+      var num = iti_2.getNumber(),
+        valid = iti_2.isValidNumber();
+      if (valid) {
+        input.value = num;
+        form.submit();
+      } else {
+        alert("Mobile number is not valid");
+      }
+
+    }
+  })
+
+</script>
+{% endblock %}

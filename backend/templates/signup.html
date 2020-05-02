@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form-container">
+    <h2 class="form-title">Sign Up</h2>
+    <ul class="color">
+      <li class="green"></li>
+      <li class="blue"></li>
+      <li class="red"></li>
+      <li class="purple"></li>
+      <li class="cyan"></li>
+      <li class="yellow"></li>
+    </ul>
+    <div id="choices-container" class="choices-container">
+        <div id="signup-choices-container" class="signup-choices-container">
+            <a id="email-signup-btn" href="{% url 'account:signup-email' %}">SignUp With Email</a>
+            <a id="mobile-signup-btn" href="{% url 'account:signup-mobile' %}">SignUp with Mobile</a>
+          </div>
+          <hr>
+          <div id="social-signup-container" class="social-signup-container">
+            <a href="#"><img src="{% static 'image/facebook-logo.png' %}" alt="Facebook"><span>Continue with Facebook</span></a>
+            <a href="#"><img src="{% static 'image/twitter-logo.png' %}" alt="Twitter"><span>Continue with Twitter</span></a>
+            <a href="#"><img src="{% static 'image/instagram-logo.png' %}" alt="Instagram"><span>Continue with Instagram</span></a>
+          </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

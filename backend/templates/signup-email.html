@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <div class="form-container">
+    <h2 class="form-title">Sign Up</h2>
+    <ul class="color">
+      <li class="green"></li>
+      <li class="blue"></li>
+      <li class="red"></li>           
+      <li class="purple"></li>
+      <li class="cyan"></li>
+      <li class="yellow"></li>
+    </ul>
+    <div id="form" class="form">
+      <form action="" method="POST">
+        {{ form }}
+        {% csrf_token %}
+        <div style="display: flex; flex-direction: row-reverse">
+          <input type="submit" class="button btnFade btnLightBlue" value="SignUp">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}
