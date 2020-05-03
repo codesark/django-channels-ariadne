@@ -1,3 +1,4 @@
 .venv
 static
 media
+__pycache__
