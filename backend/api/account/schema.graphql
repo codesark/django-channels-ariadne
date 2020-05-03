@@ -1,0 +1,15 @@
+type User {
+    id: ID!
+    username: String
+    firstName: String
+    lastName: String
+    isActive: Boolean
+    email: String
+    phoneNumber: String
+    dob: DateTime
+}
+
+extend type Query {
+    users: [User]!
+}
+

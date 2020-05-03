@@ -1,25 +1,24 @@
-from ariadne import (QueryType, gql, make_executable_schema,
-                     snake_case_fallback_resolvers)
+from ariadne import make_executable_schema, snake_case_fallback_resolvers
 
-type_defs = gql("""
-    type Query {
-        hello: String!
-    }
-""")
+from .account.schema import account_typedefs
+from .core import (mutation, mutation_typedef, query, query_typedef,
+                   subscription, subscription_typedef)
+from .scalars import scalars
 
-query = QueryType()
-
-
-@query.field("hello")
-def resolve_hello(_, info):
-    # request = info.context["request"]
-    # user_agent = request.headers.get("user-agent", "guest")
-    user = info.context["request"].user
-    return f"Hello, {user}"
-
+base_typedef = "\n\n".join([
+    query_typedef,
+    mutation_typedef,
+    subscription_typedef
+])
 
 schema = make_executable_schema(
-    type_defs,
+    "\n\n".join([
+        scalars,
+        base_typedef,
+        account_typedefs,
+    ]),
     query,
+    mutation,
+    subscription,
     snake_case_fallback_resolvers
 )
